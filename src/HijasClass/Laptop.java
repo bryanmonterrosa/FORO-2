@@ -13,4 +13,13 @@ public class Laptop extends Equipo {
         this.taminioHDD = taminioHDD;
 
     }
+    public String getMemoria() {
+        return memoria;
+    }
+    public String getTamanioPantalla() {
+        return tamanioPantalla;
+    }
+    public String getTaminioHDD() {
+        return taminioHDD;
+    }
 }

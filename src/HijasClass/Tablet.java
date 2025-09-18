@@ -16,4 +16,16 @@ public class Tablet extends Equipo {
         this.tipoOS = tipoOS;
 
     }
+    public String getTamanioPantalla() {
+        return tamanioPantalla;
+    }
+    public String  getTaminoNand() {
+        return taminoNand;
+    }
+    public String getTipoOS() {
+        return tipoOS;
+    }
+    public String getTecnologiaTouch() {
+        return tecnologiaTouch;
+    }
 }
