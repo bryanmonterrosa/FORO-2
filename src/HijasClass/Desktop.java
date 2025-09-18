@@ -8,6 +8,8 @@ public class Desktop extends Equipo {
     private String tamanioTorre;
     private String tamanioHDD;
 
+
+
     public Desktop(String fabricante, String modelo, String procesador, String memoria,String grafica,String tamanioTorre,String tamanioHDD) {
         super(fabricante,modelo,procesador);
         this.memoria = memoria;
@@ -15,6 +17,17 @@ public class Desktop extends Equipo {
         this.tamanioTorre = tamanioTorre;
         this.tamanioHDD = tamanioHDD;
     }
-
+    public  String getMemoria() {
+        return memoria;
+    }
+    public String grafica(){
+        return grafica;
+    }
+    public String tamanioTorre(){
+        return tamanioTorre;
+    }
+    public String tamanioHDD(){
+        return tamanioHDD;
+    }
 }
 
