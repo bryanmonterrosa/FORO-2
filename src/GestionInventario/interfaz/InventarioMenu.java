@@ -98,9 +98,4 @@ public class InventarioMenu extends JFrame {
             listaDialog.setVisible(true);
         }
     }
-
-    public static void main(String[] args) {
-        InventarioMenu menuPrincipal = new InventarioMenu();
-        menuPrincipal.setVisible(true);
-    }
 }
