@@ -14,8 +14,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import GestionInventario.Inventario;
+
 public class InventarioMenu extends JFrame {
-    public InventarioMenu() {
+    private Inventario inventario;
+    public InventarioMenu(Inventario inventario)
+      {
+        this.inventario = inventario;
         setTitle("TODOPC");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 200);
