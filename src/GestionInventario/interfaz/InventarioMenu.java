@@ -99,8 +99,9 @@ public class InventarioMenu extends JFrame {
 
         if (opcionSeleccionada != null) {
             // Mostrar la lista de equipos del tipo seleccionado
-            ListaEquiposDialog listaDialog = new ListaEquiposDialog(this, opcionSeleccionada);
-            listaDialog.setVisible(true);
+          ListaEquiposDialog listaDialog = new ListaEquiposDialog(this, inventario, opcionSeleccionada);
+    listaDialog.setVisible(true);
+
         }
     }
 }

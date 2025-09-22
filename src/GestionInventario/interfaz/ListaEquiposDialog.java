@@ -20,11 +20,13 @@ public class ListaEquiposDialog extends JDialog {
     private DefaultTableModel modeloTabla;
     private JButton btnCerrar;
     private Inventario inventario; // referencia al inventario
+    
 
-    public ListaEquiposDialog(JFrame parent, String tipoEquipo, Inventario inventario) {
-        super(parent, "Lista de " + tipoEquipo, true);
+  public ListaEquiposDialog(JFrame parent, Inventario inventario, String tipoEquipo) {
+    super(parent, "Lista de " + tipoEquipo, true);
         this.tipoEquipo = tipoEquipo;
-        this.inventario = inventario; // guardamos referencia al inventario
+        this.inventario = inventario;
+         // guardamos referencia al inventario
 
         setSize(800, 400);
         setLocationRelativeTo(parent);
@@ -69,8 +71,8 @@ public class ListaEquiposDialog extends JDialog {
                 columnas = new String[]{
                         "Fabricante", 
                         "Modelo", 
-                        "Microprocesador", "
-                        Tamano diagonal de pantalla",
+                        "Microprocesador", 
+                        "Tamano diagonal de pantalla",
                         "Capacitiva/Resistiva",
                          "Tamano memoria NAND", 
                          "Sistema Operativo"
