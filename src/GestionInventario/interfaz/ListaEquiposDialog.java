@@ -3,6 +3,12 @@ package GestionInventario.interfaz;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import GestionInventario.Inventario;
+import HijasClass.Laptop;
+import HijasClass.Tablet;
+import PadresClass.Equipo;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,10 +18,12 @@ public class ListaEquiposDialog extends JDialog {
     private JTable tablaEquipos;
     private DefaultTableModel modeloTabla;
     private JButton btnCerrar;
+    private Inventario = inventario; //  para acceder a la lista real
 
     public ListaEquiposDialog(JFrame parent, String tipoEquipo) {
         super(parent, "Lista de " + tipoEquipo, true);
         this.tipoEquipo = tipoEquipo;
+        this. Inventario = inventario; // guardamos referencia al inventario
 
         setSize(800, 400);
         setLocationRelativeTo(parent);
@@ -23,6 +31,7 @@ public class ListaEquiposDialog extends JDialog {
 
         setup();
         cargarDatosEjemplo();
+        cargarDatosDesdeInvetario();// carga desde el inventario
         configurarBotones();
     }
 
@@ -103,7 +112,59 @@ public class ListaEquiposDialog extends JDialog {
         add(panelBotones, BorderLayout.SOUTH);
     }
 
-    private void cargarDatosEjemplo() {
+    private void cargarDatosDesdeInvetario()   // nuevo metodo para cargar inventario
+        modeloTabla.setRowCount(0);
+         for (Equipo eq : inventario.getTodosLosEquipos()) {
+            if ("Desktop".equals(tipoEquipo) && eq instanceof Desktop) {
+                Desktop d = (Desktop) eq;
+                modeloTabla.addRow(new Object[]{
+                        d.getFabricante(), d.getModelo(), d.getProcesador(),
+                        d.getMemoria(), d.grafica(), d.tamanioTorre(), d.tamanioHDD()
+                });
+            } else if ("Laptop".equals(tipoEquipo) && eq instanceof Laptop) {
+                Laptop l = (Laptop) eq;
+                modeloTabla.addRow(new Object[]{
+                        l.getFabricante(), l.getModelo(), l.getProcesador(),
+                        l.getMemoria(), l.getTamanioPantalla(), l.getTaminioHDD()
+                });
+            } else if ("Tablet".equals(tipoEquipo) && eq instanceof Tablet) {
+                Tablet t = (Tablet) eq;
+                modeloTabla.addRow(new Object[]{
+                        t.getFabricante(), t.getModelo(), t.getProcesador(),
+                        t.getTamanioPantalla(), t.getTecnologiaTouch(), t.getTaminoNand(), t.getTipoOS()
+                });
+            } else if ("Todos los equipos".equals(tipoEquipo)) {
+                if (eq instanceof Desktop) {
+                    Desktop d = (Desktop) eq;
+                    modeloTabla.addRow(new Object[]{
+                            "Desktop", d.getFabricante(), d.getModelo(), d.getProcesador(),
+                            d.getMemoria(), d.grafica() + ", " + d.tamanioTorre() + ", " + d.tamanioHDD()
+                    });
+                } else if (eq instanceof Laptop) {
+                    Laptop l = (Laptop) eq;
+                    modeloTabla.addRow(new Object[]{
+                            "Laptop", l.getFabricante(), l.getModelo(), l.getProcesador(),
+                            l.getMemoria(), l.getTamanioPantalla() + ", " + l.getTaminioHDD()
+                    });
+                } else if (eq instanceof Tablet) {
+                    Tablet t = (Tablet) eq;
+                    modeloTabla.addRow(new Object[]{
+                            "Tablet", t.getFabricante(), t.getModelo(), t.getProcesador(),
+                            "N/A", t.getTamanioPantalla() + ", " + t.getTecnologiaTouch() + ", "
+                                    + t.getTaminoNand() + ", " + t.getTipoOS()
+                    });
+                }
+            }
+        }
+    }
+        private void configurarBotones() {
+        btnCerrar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+    }
+}
         // Cargar datos de ejemplo segun el tipo de equipo
         switch (tipoEquipo) {
             case "Desktop":
