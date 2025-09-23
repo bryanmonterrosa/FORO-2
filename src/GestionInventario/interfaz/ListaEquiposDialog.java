@@ -113,29 +113,43 @@ public class ListaEquiposDialog extends JDialog {
         add(panelBotones, BorderLayout.SOUTH);
     }
 
-    private void cargarDatosDesdeInventario() { // nuevo metodo para cargar inventario
-        modeloTabla.setRowCount (0);
+  private void cargarDatosDesdeInventario() {
+    modeloTabla.setRowCount(0); // limpiar tabla antes de recargar
 
-        for (Equipo eq : inventario.getInventario(Equipo.class)) {
-            if ("Desktop".equals(tipoEquipo) && eq instanceof Desktop) {
+    switch (tipoEquipo) {
+        case "Desktop":
+            for (Equipo eq : inventario.getInventario(Desktop.class)) {
                 Desktop d = (Desktop) eq;
                 modeloTabla.addRow(new Object[]{
                         d.getFabricante(), d.getModelo(), d.getProcesador(),
                         d.getMemoria(), d.grafica(), d.tamanioTorre(), d.tamanioHDD()
                 });
-            } else if ("Laptop".equals(tipoEquipo) && eq instanceof Laptop) {
+            }
+            break;
+
+        case "Laptop":
+            for (Equipo eq : inventario.getInventario(Laptop.class)) {
                 Laptop l = (Laptop) eq;
                 modeloTabla.addRow(new Object[]{
                         l.getFabricante(), l.getModelo(), l.getProcesador(),
                         l.getMemoria(), l.getTamanioPantalla(), l.getTaminioHDD()
                 });
-            } else if ("Tablet".equals(tipoEquipo) && eq instanceof Tablet) {
+            }
+            break;
+
+        case "Tablet":
+            for (Equipo eq : inventario.getInventario(Tablet.class)) {
                 Tablet t = (Tablet) eq;
                 modeloTabla.addRow(new Object[]{
                         t.getFabricante(), t.getModelo(), t.getProcesador(),
-                        t.getTamanioPantalla(), t.getTecnologiaTouch(), t.getTaminoNand(), t.getTipoOS()
+                        t.getTamanioPantalla(), t.getTecnologiaTouch(),
+                        t.getTaminoNand(), t.getTipoOS()
                 });
-            } else if ("Todos los equipos".equals(tipoEquipo)) {
+            }
+            break;
+
+        case "Todos los equipos":
+            for (Equipo eq : inventario.getInventario(Equipo.class)) {
                 if (eq instanceof Desktop) {
                     Desktop d = (Desktop) eq;
                     modeloTabla.addRow(new Object[]{
@@ -156,9 +170,9 @@ public class ListaEquiposDialog extends JDialog {
                     });
                 }
             }
-        }
+            break;
     }
-
+}
     private void configurarBotones() {
         btnCerrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
