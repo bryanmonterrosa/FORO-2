@@ -1,5 +1,11 @@
 package GestionInventario.interfaz;
 
+import GestionInventario.Inventario;
+import HijasClass.Desktop;
+import HijasClass.Laptop;
+import HijasClass.Tablet;
+import PadresClass.Equipo;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,11 +19,13 @@ public class RegistrarEquipoDialog extends JDialog {
     private JButton btnRegistrar;
     private JButton btnCancelar;
     private Map<String, JTextField> campos;
+    private Inventario inventario;
 
-    public RegistrarEquipoDialog(JFrame parent, String tipoEquipo) {
+    public RegistrarEquipoDialog(JFrame parent, String tipoEquipo, Inventario inventario) {
         super(parent, "Registrar " + tipoEquipo, true);
         this.tipoEquipo = tipoEquipo;
         this.campos = new HashMap<String, JTextField>();
+        this.inventario = inventario;
         
         setSize(500, 400);
         setLocationRelativeTo(parent);
@@ -230,14 +238,15 @@ public class RegistrarEquipoDialog extends JDialog {
         // Validar que todos los campos esten llenos
         for (Map.Entry<String, JTextField> entry : campos.entrySet()) {
             if (entry.getValue().getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, 
-                    "Por favor complete el campo: " + entry.getKey(), 
-                    "Campo requerido", 
+                JOptionPane.showMessageDialog(this,
+                    "Por favor complete el campo: " + entry.getKey(),
+                    "Campo requerido",
                     JOptionPane.WARNING_MESSAGE);
                 entry.getValue().requestFocus();
                 return;
             }
         }
+
 
         StringBuilder mensaje = new StringBuilder();
         mensaje.append("Equipo registrado exitosamente:\n\n");
@@ -248,6 +257,44 @@ public class RegistrarEquipoDialog extends JDialog {
         }
         
         JOptionPane.showMessageDialog(this, mensaje.toString(), "Equipo Registrado", JOptionPane.INFORMATION_MESSAGE);
+        Equipo equipo=null;
+        switch (tipoEquipo) {
+            case "Desktop":
+                equipo = new Desktop(
+                        campos.get("Fabricante").getText(),
+                        campos.get("Modelo").getText(),
+                        campos.get("Microprocesador").getText(),
+                        campos.get("Memoria").getText(),
+                        campos.get("Tarjeta grafica").getText(),
+                        campos.get("Tamaño de torre").getText(),
+                        campos.get("Capacidad de disco duro").getText());
+
+                break;
+
+            case "Laptop":
+                equipo = new Laptop(
+                        campos.get("Fabricante").getText(),
+                        campos.get("Modelo").getText(),
+                        campos.get("Microprocesador").getText(),
+                        campos.get("Memoria").getText(),
+                        campos.get("Tamaño pantalla").getText(),
+                        campos.get("Capacidad de disco duro").getText());
+
+                break;
+
+            case "Tablet":
+                equipo = new Tablet(
+                        campos.get("Fabricante").getText(),
+                        campos.get("Modelo").getText(),
+                        campos.get("Microprocesador").getText(),
+                        campos.get("Tamano diagonal de pantalla").getText(),
+                        campos.get("Capacitiva/Resistiva").getText(),
+                        campos.get("Tamaño memoria NAND").getText(),
+                        campos.get("Sistema Operativo").getText());
+
+                break;
+        }
+        inventario.agregarEquipo(equipo);
         dispose();
     }
 }
