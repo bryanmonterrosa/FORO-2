@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class RegistrarEquipoDialog extends JDialog {
@@ -24,7 +24,7 @@ public class RegistrarEquipoDialog extends JDialog {
     public RegistrarEquipoDialog(JFrame parent, String tipoEquipo, Inventario inventario) {
         super(parent, "Registrar " + tipoEquipo, true);
         this.tipoEquipo = tipoEquipo;
-        this.campos = new HashMap<String, JTextField>();
+        this.campos = new LinkedHashMap<String, JTextField>();
         this.inventario = inventario;
         
         setSize(500, 400);
@@ -236,26 +236,31 @@ public class RegistrarEquipoDialog extends JDialog {
     
     private void registrarEquipo() {
         // Validar que todos los campos esten llenos
+        StringBuilder errorValidacion = new StringBuilder("Por favor complete los campos faltantes:\n\n");
+        boolean existeError = false;
         for (Map.Entry<String, JTextField> entry : campos.entrySet()) {
             if (entry.getValue().getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                    "Por favor complete el campo: " + entry.getKey(),
-                    "Campo requerido",
-                    JOptionPane.WARNING_MESSAGE);
-                entry.getValue().requestFocus();
-                return;
+                errorValidacion.append("- ").append(entry.getKey().replaceFirst(":", "")).append("\n");
+                existeError = true;
             }
         }
 
+        if (existeError) {
+            JOptionPane.showMessageDialog(this,
+                    errorValidacion.toString(),
+                    "Campo(s) requerido",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
         StringBuilder mensaje = new StringBuilder();
         mensaje.append("Equipo registrado exitosamente:\n\n");
         mensaje.append("Tipo: ").append(tipoEquipo).append("\n");
-        
+
         for (Map.Entry<String, JTextField> entry : campos.entrySet()) {
             mensaje.append(entry.getKey()).append(": ").append(entry.getValue().getText()).append("\n");
         }
-        
+
         JOptionPane.showMessageDialog(this, mensaje.toString(), "Equipo Registrado", JOptionPane.INFORMATION_MESSAGE);
         Equipo equipo=null;
         switch (tipoEquipo) {
