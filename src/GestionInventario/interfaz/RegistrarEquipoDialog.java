@@ -243,6 +243,7 @@ public class RegistrarEquipoDialog extends JDialog {
                     "Campo requerido",
                     JOptionPane.WARNING_MESSAGE);
                 entry.getValue().requestFocus();
+                return;
             }
         }
 
