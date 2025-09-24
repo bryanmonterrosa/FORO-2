@@ -80,7 +80,7 @@ public class InventarioMenu extends JFrame {
 
         if (tipoSeleccionado != null) {
             // Mostrar el formulario dinamico para el tipo seleccionado
-            RegistrarEquipoDialog dialog = new RegistrarEquipoDialog(this, tipoSeleccionado);
+            RegistrarEquipoDialog dialog = new RegistrarEquipoDialog(this, tipoSeleccionado,inventario);
             dialog.setVisible(true);
         }
     }
